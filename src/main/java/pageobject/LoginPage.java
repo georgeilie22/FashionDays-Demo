@@ -28,4 +28,10 @@ public class LoginPage extends Header {
         return new Homepage(driver);
     }
 
+    public Homepage invalidLogin(String user, String password){
+        emailField.sendKeys(user);
+        passwordField.sendKeys(password);
+        submitbutton.click();
+        return new Homepage(driver);
+    }
 }

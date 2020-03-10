@@ -1,5 +1,6 @@
 package pageobject;
 
+import core.utils.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,12 +11,13 @@ public class MyAccountPage extends Header {
         super(driver);
     }
 
-
     @FindBy(xpath = "//*[@id='full-site-canvas']/div[3]/div/div/h1")
     protected WebElement myAccountTextAssert;
 
     public MyAccountPage assertAccountPage() {
+        SeleniumUtils.staticWait(1);
         accountButton.click();
+        SeleniumUtils.waitForElementToBeVisible(5, myAccountTextAssert);
         Assert.assertEquals(myAccountTextAssert.getText(), "CONTUL MEU");
         return new MyAccountPage(driver);
     }
