@@ -1,5 +1,6 @@
 package tests;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import core.utils.JsonUtil;
 import core.utils.SeleniumUtils;
@@ -37,18 +38,23 @@ public class LoginTest {
     }
 
 
-    @DataProvider(name = "invalidlogindata")
-    public static Object[] invaliddata() {
-        JsonObject jsonObject = JsonUtil.getJson("src\\main\\java\\resources\\emails.json");
-        
+    @DataProvider(name= "invalidlogin")
+    public Object[][] dataProviderMethod(){
+        JsonObject emails= JsonUtil.getJson("src\\main\\resources\\emails.json");
+        JsonArray emailArray= emails.getAsJsonArray("invalid_email_values");
+        JsonObject passwords= JsonUtil.getJson("src\\main\\resources\\passwords.json");
+        JsonArray passwrodsArray= passwords.getAsJsonArray("invalid_password_values");
+
+        return new Object[][] {{emailArray.get(0).toString().replace("\"", "").toString()}};
+
     }
 
-    @Test
-    public void invalidLoginTest(String user, String password) {
+    @Test(dataProvider = "invalidlogin")
+    public void invalidLoginTest(String user) {
         homepage = new Homepage(driver)
                 .allowNotifications()
                 .getToLoginPage()
-                .invalidLogin(user, password);
+                .invalidLogin(user, "12345");
     }
 
     @AfterMethod
