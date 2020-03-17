@@ -1,6 +1,5 @@
 package pageobject;
 
-import com.google.common.truth.Truth;
 import core.CredentialsJson;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +11,11 @@ public class LoginPage extends Header {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
+
+    private static String INCORECT_EMAIL_PASSWORD="Adresa de email sau parola este incorecta." +
+            " Te rugam sa introduci o alta combinatie.";
+    private static String INVALID_EMAIL= "Adresa de email este invalida.";
+    private static String EMPTY_FIELD= "Acest camp este obligatoriu";
 
     @FindBy(id = "email")
     private WebElement emailField;
@@ -35,14 +39,26 @@ public class LoginPage extends Header {
         return new Homepage(driver);
     }
 
-    public LoginPage invalidLogin(String user, String password){
+    public LoginPage invalidLogin(String user, String password) {
         emailField.sendKeys(user);
         passwordField.sendKeys(password);
         submitbutton.click();
         return new LoginPage(driver);
     }
 
-    public LoginPage AssertLoginError(){
+    public LoginPage AssertLoginError() {
+        System.out.println(emailField.getText()+ "/"+ passwordField.getText());
+        if (!emailField.getText().equalsIgnoreCase("")){
+            Assert.assertTrue(emailErrorMessage.getText().equals(INCORECT_EMAIL_PASSWORD) ||
+                    emailErrorMessage.getText().equals(INVALID_EMAIL));
+        }
+        if (emailField.getText().equalsIgnoreCase("")){
+            Assert.assertEquals(emailErrorMessage.getText(),EMPTY_FIELD);
+        }
+        if (passwordField.getText().equalsIgnoreCase("")){
+            Assert.assertEquals(passwordErrorMessage.getText(),EMPTY_FIELD);
+        }
+
         return new LoginPage(driver);
     }
 

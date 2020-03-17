@@ -43,7 +43,8 @@ public class LoginTest {
                 .allowNotifications();
         loginPage = homepage
                 .getToLoginPage()
-                .invalidLogin(user, pass);
+                .invalidLogin(user, pass)
+                .AssertLoginError();
 
     }
 

@@ -25,7 +25,7 @@ public class SeleniumUtils {
     }
 
     public static void waitForElementToBeVisible(int seconds, WebElement element){
-        new WebDriverWait(driver, seconds).until(ExpectedConditions.visibilityOf(element)).click();
+        new WebDriverWait(driver, seconds).until(ExpectedConditions.visibilityOf(element));
     }
 
     public static void staticWait(int seconds) {
