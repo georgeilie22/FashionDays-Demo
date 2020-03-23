@@ -7,14 +7,14 @@ import org.testng.annotations.DataProvider;
 
 public class LoginDataProvider {
 
-    @DataProvider(name = "invalidlogin")
-    public Object[][] dataProviderMethod() {
+    @DataProvider(name = "invalidEmails")
+    public Object[][] invalidEmails() {
         JsonObject emails = JsonUtil.getJson("src\\main\\resources\\emails.json");
         JsonArray emailArray = emails.getAsJsonArray("invalid_email_values");
         JsonObject passwords = JsonUtil.getJson("src\\main\\resources\\passwords.json");
         JsonArray passwrodsArray = passwords.getAsJsonArray("invalid_password_values");
 
-        Object[][] obiect = new Object[17][2];
+        Object[][] obiect = new Object[emailArray.size()][2];
         for (int nr = 0; nr < emailArray.size(); nr++) {
             obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
             obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
@@ -22,4 +22,38 @@ public class LoginDataProvider {
 
         return obiect;
     }
+
+    @DataProvider(name = "validEmails")
+    public Object[][] validEmails() {
+        JsonObject emails = JsonUtil.getJson("src\\main\\resources\\emails.json");
+        JsonArray emailArray = emails.getAsJsonArray("valid_email_values");
+        JsonObject passwords = JsonUtil.getJson("src\\main\\resources\\passwords.json");
+        JsonArray passwrodsArray = passwords.getAsJsonArray("invalid_password_values");
+
+        Object[][] obiect = new Object[emailArray.size()][2];
+        for (int nr = 0; nr < emailArray.size(); nr++) {
+            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
+            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+        }
+
+        return obiect;
+    }
+
+    @DataProvider(name = "emptyEmails")
+    public Object[][] emptyEmails() {
+        JsonObject emails = JsonUtil.getJson("src\\main\\resources\\emails.json");
+        JsonArray emailArray = emails.getAsJsonArray("empty_email_values");
+        JsonObject passwords = JsonUtil.getJson("src\\main\\resources\\passwords.json");
+        JsonArray passwrodsArray = passwords.getAsJsonArray("invalid_password_values");
+
+        Object[][] obiect = new Object[emailArray.size()][2];
+        for (int nr = 0; nr < emailArray.size(); nr++) {
+            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
+            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+        }
+
+        return obiect;
+    }
+
+
 }

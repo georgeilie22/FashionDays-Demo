@@ -20,7 +20,7 @@ public class SeleniumUtils {
         return driver;
     }
 
-    public static void waitForElementToBeClickable(int seconds, WebElement element) {
+    public static void waitForElementAndClick(int seconds, WebElement element) {
         new WebDriverWait(driver, seconds).until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 

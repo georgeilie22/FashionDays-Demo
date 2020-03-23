@@ -1,6 +1,8 @@
 package pageobject;
 
 import core.CredentialsJson;
+import core.enums.LoginErrorsEnum;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,17 +48,15 @@ public class LoginPage extends Header {
         return new LoginPage(driver);
     }
 
-    public LoginPage AssertLoginError() {
-        System.out.println(emailField.getText()+ "/"+ passwordField.getText());
-        if (!emailField.getText().equalsIgnoreCase("")){
-            Assert.assertTrue(emailErrorMessage.getText().equals(INCORECT_EMAIL_PASSWORD) ||
-                    emailErrorMessage.getText().equals(INVALID_EMAIL));
-        }
-        if (emailField.getText().equalsIgnoreCase("")){
-            Assert.assertEquals(emailErrorMessage.getText(),EMPTY_FIELD);
-        }
-        if (passwordField.getText().equalsIgnoreCase("")){
-            Assert.assertEquals(passwordErrorMessage.getText(),EMPTY_FIELD);
+    public LoginPage AssertLoginError(LoginErrorsEnum errorsEnum) {
+
+        switch (errorsEnum){
+            case EMPTY_EMAIL: Assert.assertEquals(emailErrorMessage.getText(),EMPTY_FIELD);
+            break;
+            case VALID_EMAIL: Assert.assertEquals(emailErrorMessage.getText(),INCORECT_EMAIL_PASSWORD);
+            break;
+            case INVALID_EMAIL: Assert.assertEquals(emailErrorMessage.getText(),INVALID_EMAIL);
+            break;
         }
 
         return new LoginPage(driver);
