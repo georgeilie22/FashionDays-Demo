@@ -1,5 +1,8 @@
 package core.enums;
 
+import core.BrowserBuilder;
+import core.DTO;
+
 /**
  * These enumerations are used so the user can choose what browser he wants to use;
  * The key and path are used while setting the property for the driver;
@@ -7,8 +10,8 @@ package core.enums;
  */
 public enum BrowserEnum {
 
-    CHROME("webdriver.chrome.driver", "src\\main\\resources\\drivers\\chromedriver.exe"),
-    MOZILLA("webdriver.gecko.driver", "src\\main\\resources\\drivers\\geckodriver.exe");
+    CHROME("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe"),
+    MOZILLA("webdriver.gecko.driver", "src/main/resources/drivers/geckodriver.exe");
 
 
     private String key;
@@ -17,6 +20,12 @@ public enum BrowserEnum {
     BrowserEnum(String key, String path) {
         this.key = key;
         this.path = path;
+    }
+
+    public static BrowserEnum returnBrowser(){
+        if (DTO.getBrowser().equalsIgnoreCase("chrome")) {
+            return CHROME;
+        } else return MOZILLA;
     }
 
     public String getKey() {
