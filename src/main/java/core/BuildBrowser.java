@@ -7,7 +7,7 @@ import core.enums.BrowserEnum;
 import core.enums.SizeEnum;
 import org.openqa.selenium.WebDriver;
 
-public class BuildBrowser  implements BrowserBuilder{
+public class BuildBrowser implements BrowserBuilder {
 
     public static final String WEBSITE = "https://www.fashiondays.ro/";
     private BrowserEnum browser;
@@ -21,7 +21,7 @@ public class BuildBrowser  implements BrowserBuilder{
      * This method is instantiating a driver builder class
      * based on what driver is set in the constructor parameter;
      */
-    private void startBrowser() {
+    private void createBrowser() {
         switch (browser) {
             case CHROME:
                 driver = new ChromeConfig();
@@ -31,27 +31,24 @@ public class BuildBrowser  implements BrowserBuilder{
         }
     }
 
-
     @Override
     public BrowserBuilder isHeadless(boolean bool) {
-        if (driver == null) startBrowser();
+        if (driver == null) createBrowser();
         driver.isHeadless(bool);
         return this;
     }
 
-
     @Override
     public BrowserBuilder withSize(SizeEnum size) {
-        if (driver == null) startBrowser();
+        if (driver == null) createBrowser();
         driver.withSize(size);
         return this;
     }
 
     @Override
     public WebDriver build() {
-        if (driver == null) startBrowser();
+        if (driver == null) createBrowser();
         return driver.build();
     }
-
 
 }

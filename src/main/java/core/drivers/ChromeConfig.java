@@ -14,25 +14,28 @@ public class ChromeConfig implements DriversConfig {
 
     @Override
     public DriversConfig isHeadless(boolean bool) {
-        headlessValue= bool;
-      return this;
+        headlessValue = bool;
+        return this;
 
     }
 
     @Override
     public DriversConfig withSize(SizeEnum size) {
-        browserSize =size;
+        browserSize = size;
         return this;
     }
 
     @Override
     public WebDriver build() {
-        System.setProperty(BrowserEnum.CHROME.getKey(),BrowserEnum.CHROME.getPath());
-        ChromeOptions chromeOptions= new ChromeOptions();
+        System.setProperty(BrowserEnum.CHROME.getKey(), BrowserEnum.CHROME.getPath());
+        ChromeOptions chromeOptions = new ChromeOptions();
+
         if (headlessValue) chromeOptions.setHeadless(true);
-        WebDriver driver= new ChromeDriver(chromeOptions);
-        if (browserSize==SizeEnum.MAX) driver.manage().window().maximize();
+        WebDriver driver = new ChromeDriver(chromeOptions);
+
+        if (browserSize == SizeEnum.MAX) driver.manage().window().maximize();
         else driver.manage().window().setSize(new Dimension(browserSize.getWidth(), browserSize.getHight()));
+
         return driver;
     }
 }
