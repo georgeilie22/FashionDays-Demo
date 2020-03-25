@@ -2,6 +2,7 @@ package tests;
 
 import core.BuildBrowser;
 import core.Config;
+import core.utils.URLUtil;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,6 @@ public class BaseTest {
 
     @Test
     public void testTest() {
-        driver.get(WEBSITE);
+        driver.get(URLUtil.getURL());
     }
 }
