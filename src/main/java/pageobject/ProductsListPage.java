@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class ProductsListPage extends  Header {
-    ProductsListPage(WebDriver driver) {
+    public ProductsListPage(WebDriver driver) {
         super(driver);
     }
 
@@ -17,7 +17,7 @@ public class ProductsListPage extends  Header {
 
 
     public ProductPage clickOnRandomProduct(){
-        int randomNumber = RandomNumberGenerator.generateNumber(0, products.size());
+        int randomNumber = RandomNumberGenerator.generateNumber(0, products.size()-1);
         System.out.println(randomNumber);
         SeleniumUtils.waitForElementAndClick(5,products.get(randomNumber));
         return new ProductPage(driver);

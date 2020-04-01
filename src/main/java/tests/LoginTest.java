@@ -7,10 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject.Homepage;
+import pageobject.CampainsPage;
+import pageobject.Header;
 import pageobject.LoginPage;
 import pageobject.MyAccountPage;
-import pageobject.ProductPage;
 
 import static core.BuildBrowser.WEBSITE;
 
@@ -18,7 +18,7 @@ public class LoginTest {
 
 
     WebDriver driver;
-    Homepage homepage;
+    CampainsPage campainsPage;
     LoginPage loginPage;
 
 
@@ -26,12 +26,12 @@ public class LoginTest {
     public void beforeTest() {
         driver = SeleniumUtils.buildDriver();
         driver.get(WEBSITE);
+        new Header(driver).allowNotifications();
     }
 
     @Test
     public void validLoginTest() {
-        homepage = new Homepage(driver)
-                .allowNotifications()
+        campainsPage = new CampainsPage(driver)
                 .getToLoginPage()
                 .validLogin();
         new MyAccountPage(driver).assertAccountPage();
@@ -41,9 +41,8 @@ public class LoginTest {
 
     @Test(dataProvider = "invalidEmails", dataProviderClass = LoginDataProvider.class)
     public void invalidEmailsLoginTest(String user, String pass) {
-        homepage = new Homepage(driver)
-                .allowNotifications();
-        loginPage = homepage
+        campainsPage = new CampainsPage(driver);
+        loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
                 .AssertLoginError(LoginErrorsEnum.INVALID_EMAIL);
@@ -52,9 +51,8 @@ public class LoginTest {
 
     @Test(dataProvider = "validEmails", dataProviderClass = LoginDataProvider.class)
     public void validEmailsLoginTest(String user, String pass) {
-        homepage = new Homepage(driver)
-                .allowNotifications();
-        loginPage = homepage
+        campainsPage = new CampainsPage(driver);
+        loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
                 .AssertLoginError(LoginErrorsEnum.VALID_EMAIL);
@@ -63,9 +61,8 @@ public class LoginTest {
 
     @Test(dataProvider = "emptyEmails", dataProviderClass = LoginDataProvider.class)
     public void emptyEmailsLoginTest(String user, String pass) {
-        homepage = new Homepage(driver)
-                .allowNotifications();
-        loginPage = homepage
+        campainsPage = new CampainsPage(driver);
+        loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
                 .AssertLoginError(LoginErrorsEnum.EMPTY_EMAIL);

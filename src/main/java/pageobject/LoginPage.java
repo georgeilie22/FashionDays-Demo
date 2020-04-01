@@ -2,7 +2,6 @@ package pageobject;
 
 import core.CredentialsJson;
 import core.enums.LoginErrorsEnum;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,11 +33,11 @@ public class LoginPage extends Header {
     @FindBy(xpath = "(//div[@class='error-message'])[2]")
     private WebElement passwordErrorMessage;
 
-    public Homepage validLogin() {
+    public CampainsPage validLogin() {
         emailField.sendKeys(CredentialsJson.getCredential("validemail"));
         passwordField.sendKeys(CredentialsJson.getCredential("validpassword"));
         submitbutton.click();
-        return new Homepage(driver);
+        return new CampainsPage(driver);
     }
 
     public LoginPage invalidLogin(String user, String password) {
