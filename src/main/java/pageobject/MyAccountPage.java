@@ -11,7 +11,7 @@ public class MyAccountPage extends Header {
         super(driver);
     }
 
-    @FindBy(xpath = "//*[@id='full-site-canvas']/div[3]/div/div/h1")
+    @FindBy(css = ".my-account-title > h1")
     protected WebElement myAccountTextAssert;
 
     public MyAccountPage assertAccountPage() {

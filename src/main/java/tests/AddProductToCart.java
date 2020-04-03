@@ -29,7 +29,7 @@ public class AddProductToCart {
 
     }
 
-    @Test(invocationCount = 1)
+    @Test(priority = 1)
     public void addProductToCartNotLoggedIn() {
         productPage = homePage
                 .goToManPage()
@@ -42,7 +42,19 @@ public class AddProductToCart {
                 .checkProductInCart(productName);
     }
 
-    @Test
+    @Test(priority = 2)
+    public void addProductToCartAndCheckProuctIds() {
+        productPage = homePage
+                .goToManPage()
+                .clickOnRandomCampain()
+                .clickOnRandomProduct();
+        String productId = productPage.selectRandomSizeAndGetItemId();
+        productPage.addToCart()
+                .goToCart()
+                .checkProductId(productId);
+    }
+
+    @Test(priority = 3)
     public void addProductToCartLoggedIn() {
         new CampainsPage(driver)
                 .getToLoginPage()

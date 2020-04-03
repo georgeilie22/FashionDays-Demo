@@ -18,16 +18,16 @@ public class ProductPage extends Header {
     List<WebElement> shoesSizeList = driver.findElements(By.cssSelector("label[class='sizeSelector btn btn-block btn-default po-link  ']"));
     List<WebElement> sizeDropdownList = driver.findElements(By.cssSelector("label[class='sizeSelector btn btn-block btn-default po-link  ']  "));
 
-    @FindBy(id = "buy-box")
+    @FindBy(css = "#buy-box")
     private WebElement addToCartButton;
 
-    @FindBy(id = "tab_about_the_brand")
+    @FindBy(css = "#tab_about_the_brand")
     private WebElement productBrandName;
 
     @FindBy(css = "h1.product-brand-desc")
     private WebElement productDetailedName;
 
-    @FindBy(id = "sizeDrop")
+    @FindBy(css = "#sizeDrop")
     private WebElement sizeDropdown;
 
 
@@ -35,31 +35,41 @@ public class ProductPage extends Header {
         SeleniumUtils.waitForElementAndClick(5, addToCartButton);
         return new ProductPage(driver);
     }
-    
 
-    public ProductPage selectRandomSizeFromDropdown() {
-        SeleniumUtils.waitForElementAndClick(5, sizeDropdown);
-        int randomNumber = RandomNumberGenerator.generateNumber(0, sizeDropdownList.size() - 1);
-        SeleniumUtils.waitForElementAndClick(5, sizeDropdownList.get(randomNumber));
-        return new ProductPage(driver);
 
+    public String selectRandomSizeFromDropdown() {
+        if (sizeDropdownList.size() > 0) {
+            SeleniumUtils.waitForElementAndClick(5, sizeDropdown);
+            int randomNumber = RandomNumberGenerator.generateNumber(0, sizeDropdownList.size() - 1);
+            SeleniumUtils.waitForElementAndClick(5, sizeDropdownList.get(randomNumber));
+            String itemId = shoesSizeList.get(randomNumber).getAttribute("data-productid");
+            return itemId;
+        } else return "This item does not have an id";
     }
 
-    public ProductPage selectRandomSizeFormButtons() {
+    public String selectRandomSizeFormButtons() {
+        if (clothesSizesList.size() > 0 || sizeDropdownList.size() > 0) {
+            try {
+                int randomNumber = RandomNumberGenerator.generateNumber(0, clothesSizesList.size() - 1);
+                SeleniumUtils.waitForElementAndClick(5, clothesSizesList.get(randomNumber));
+                String itemId = clothesSizesList.get(randomNumber).getAttribute("data-productid");
+                return itemId;
+            } catch (Exception e) {
+                int randomNumber2 = RandomNumberGenerator.generateNumber(0, shoesSizeList.size() - 1);
+                SeleniumUtils.waitForElementAndClick(5, shoesSizeList.get(randomNumber2));
+                String itemId = shoesSizeList.get(randomNumber2).getAttribute("data-productid");
+                return itemId;
+            }
+        } else return "This item does not have an id";
+    }
+
+    public String selectRandomSizeAndGetItemId() {
         try {
-            int randomNumber = RandomNumberGenerator.generateNumber(0, clothesSizesList.size() - 1);
-            System.out.println("random nr is: " + randomNumber + "listSize is " + clothesSizesList.size());
-            SeleniumUtils.waitForElementAndClick(5, clothesSizesList.get(randomNumber));
+            return selectRandomSizeFromDropdown();
         } catch (Exception e) {
-            int randomNumber2 = RandomNumberGenerator.generateNumber(0, shoesSizeList.size() - 1);
-            System.out.println("random nr is: " + randomNumber2 + "listSize is " + shoesSizeList.size());
-
-            SeleniumUtils.waitForElementAndClick(5, shoesSizeList.get(randomNumber2));
+            return selectRandomSizeFormButtons();
         }
-        return new ProductPage(driver);
     }
-
-
 
     public ProductPage selectRandomSize() {
         SeleniumUtils.staticWait(3);
@@ -77,7 +87,6 @@ public class ProductPage extends Header {
         return new ProductPage(driver);
     }
 
-    //TODO Match product in cart by id
     public String getProductName() {
         return productBrandName.getText() + "\n" + productDetailedName.getText();
     }

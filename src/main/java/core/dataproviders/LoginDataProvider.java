@@ -55,5 +55,19 @@ public class LoginDataProvider {
         return obiect;
     }
 
+    @DataProvider(name = "emptyPasswords")
+    public Object[][] emptyPasswords() {
+        JsonObject emails = JsonUtil.getJson("src\\main\\resources\\emails.json");
+        JsonArray emailArray = emails.getAsJsonArray("valid_email_values");
+        JsonObject passwords = JsonUtil.getJson("src\\main\\resources\\passwords.json");
+        JsonArray passwrodsArray = passwords.getAsJsonArray("empty_passwords");
 
+        Object[][] obiect = new Object[passwrodsArray.size()][2];
+        for (int nr = 0; nr < passwrodsArray.size(); nr++) {
+            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
+            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+        }
+
+        return obiect;
+    }
 }

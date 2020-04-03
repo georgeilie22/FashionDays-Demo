@@ -5,7 +5,6 @@ import core.utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
@@ -19,14 +18,14 @@ public class CampainsPage extends Header {
 
 
     public LoginPage getToLoginPage() {
-        SeleniumUtils.staticWait(1);
+        SeleniumUtils.staticWait(2);
         SeleniumUtils.waitForElementAndClick(5, accountButton);
         return new LoginPage(driver);
     }
 
     public ProductsListPage clickOnRandomCampain() {
+        SeleniumUtils.staticWait(1);
         int randomNumber = RandomNumberGenerator.generateNumber(0, campains.size() - 1);
-        System.out.println(randomNumber);
         SeleniumUtils.waitForElementAndClick(5, campains.get(randomNumber));
         return new ProductsListPage(driver);
     }

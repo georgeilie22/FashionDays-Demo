@@ -5,35 +5,36 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class Header extends BaseObject{
+public class Header extends BaseObject {
 
 
     public Header(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(id = "customer-account")
+    @FindBy(css = "#customer-account")
     protected WebElement accountButton;
 
-    @FindBy(id = "customer-support")
+    @FindBy(css = "#customer-support")
     protected WebElement customerSupportButton;
 
-    @FindBy(id = "wishlist-top-menu")
+    @FindBy(css = "#wishlist-top-menu")
     protected WebElement wishlistButton;
 
-    @FindBy(id = "customer-basket")
+    @FindBy(css = "#customer-basket")
     protected WebElement cartButton;
 
-    @FindBy(id = "search-input")
+    @FindBy(css = "#search-input")
     protected WebElement searchBar;
 
-    @FindBy(id = "onesignal-popover-allow-button")
+    @FindBy(css = "#onesignal-popover-allow-button")
     private WebElement allowNotificationButton;
 
-    @FindBy(id = "logo-link")
+    @FindBy(css = "#logo-link")
     private WebElement logoButton;
 
     public CartPage goToCart() {
+        SeleniumUtils.staticWait(1);
         SeleniumUtils.waitForElementAndClick(5, cartButton);
         return new CartPage(driver);
     }
@@ -42,8 +43,8 @@ public class Header extends BaseObject{
         SeleniumUtils.waitForElementAndClick(5, allowNotificationButton);
     }
 
-    public CampainsPage goToCampainsPage(){
-        SeleniumUtils.waitForElementAndClick(5,logoButton);
+    public CampainsPage goToCampainsPage() {
+        SeleniumUtils.waitForElementAndClick(5, logoButton);
         return new CampainsPage(driver);
     }
 }

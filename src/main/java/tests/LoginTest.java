@@ -69,6 +69,15 @@ public class LoginTest {
 
     }
 
+    @Test(dataProvider = "emptyPasswords", dataProviderClass = LoginDataProvider.class)
+    public void emptyPasswordLogInTest(String user, String pass) {
+        campainsPage = new CampainsPage(driver);
+        loginPage = campainsPage
+                .getToLoginPage()
+                .invalidLogin(user, pass)
+                .AssertLoginError(LoginErrorsEnum.EMPTY_PASSWORD);
+    }
+
 
     @AfterMethod
     public void teardown() {

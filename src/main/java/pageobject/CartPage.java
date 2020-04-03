@@ -16,12 +16,16 @@ public class CartPage extends Header {
         super(driver);
     }
 
-    private List<WebElement> trashIconsList = driver.findElements(By.cssSelector("a[class='remove-from-cart icon-fd-trash']"));
+    private List<WebElement> trashIconsList =
+            driver.findElements(By.cssSelector("a[class='remove-from-cart icon-fd-trash']"));
+
+    @FindBy(css = "div[data-prodid")
+    private WebElement cartProductId;
 
     @FindBy(css = "div.cart-item-description > a")
     private WebElement baksetProductName;
 
-    @FindBy(id = "empty-cart-popup-close")
+    @FindBy(css = "#empty-cart-popup-close")
     private WebElement closeCartButton;
 
     public void checkProductInCart(String product) {
@@ -30,6 +34,13 @@ public class CartPage extends Header {
     }
 
 
+    public CartPage checkProductId(String productId) {
+        SeleniumUtils.waitForElementToBeVisible(5, cartProductId);
+        Assert.assertTrue(cartProductId.getAttribute("data-prodid").equals(productId) ||
+                productId.equalsIgnoreCase("This item does not have an id"));
+        return new CartPage(driver);
+    }
+
     public CartPage deleteEveryProductFromCart() {
         for (int itemIndex = 0; itemIndex < trashIconsList.size(); itemIndex++) {
             SeleniumUtils.waitForElementAndClick(5, trashIconsList.get(itemIndex));
@@ -37,7 +48,7 @@ public class CartPage extends Header {
         return new CartPage(driver);
     }
 
-    public void closeTheCart(){
-        SeleniumUtils.waitForElementAndClick(5,closeCartButton);
+    public void closeTheCart() {
+        SeleniumUtils.waitForElementAndClick(5, closeCartButton);
     }
 }
