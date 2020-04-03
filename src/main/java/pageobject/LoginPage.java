@@ -54,7 +54,7 @@ public class LoginPage extends Header {
         return new LoginPage(driver);
     }
 
-    public LoginPage AssertLoginError(LoginErrorsEnum errorsEnum) {
+    public LoginPage assertLoginError(LoginErrorsEnum errorsEnum) {
 
         switch (errorsEnum) {
             case EMPTY_EMAIL:

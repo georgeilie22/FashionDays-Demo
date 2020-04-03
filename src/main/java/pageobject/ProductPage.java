@@ -2,7 +2,6 @@ package pageobject;
 
 import core.utils.RandomNumberGenerator;
 import core.utils.SeleniumUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,9 +13,23 @@ public class ProductPage extends Header {
         super(driver);
     }
 
-    List<WebElement> clothesSizesList = driver.findElements(By.cssSelector("label[class='sizeSelector btn btn-block btn-default po-link']"));
-    List<WebElement> shoesSizeList = driver.findElements(By.cssSelector("label[class='sizeSelector btn btn-block btn-default po-link  ']"));
-    List<WebElement> sizeDropdownList = driver.findElements(By.cssSelector("label[class='sizeSelector btn btn-block btn-default po-link  ']  "));
+
+//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link']")
+//    private List<WebElement> clothesSizesList;
+//
+//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link  ']")
+//    private List<WebElement> shoesSizeList;
+//
+//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link  ']  ")
+//    private List<WebElement> sizeDropdownList;
+
+    private static String DROPDOWN_CSS = "multiple-buttons radio-buttons dropdown";
+
+    @FindBy(css = "div[class*='radio-buttons'] > div > div > label:not([class*='disabled'])")
+    private List<WebElement> sizeList;
+
+    @FindBy(css = "div[class*='radio-buttons']")
+    private WebElement dropDropdownSelector;
 
     @FindBy(css = "#buy-box")
     private WebElement addToCartButton;
@@ -38,51 +51,38 @@ public class ProductPage extends Header {
 
 
     public String selectRandomSizeFromDropdown() {
-        if (sizeDropdownList.size() > 0) {
+        if (sizeList.size() > 0) {
             SeleniumUtils.waitForElementAndClick(5, sizeDropdown);
-            int randomNumber = RandomNumberGenerator.generateNumber(0, sizeDropdownList.size() - 1);
-            SeleniumUtils.waitForElementAndClick(5, sizeDropdownList.get(randomNumber));
-            String itemId = shoesSizeList.get(randomNumber).getAttribute("data-productid");
+            int randomNumber = RandomNumberGenerator.generateNumber(0, sizeList.size() - 1);
+            SeleniumUtils.waitForElementAndClick(5, sizeList.get(randomNumber));
+            String itemId = sizeList.get(randomNumber).getAttribute("data-productid");
             return itemId;
         } else return "This item does not have an id";
     }
 
     public String selectRandomSizeFormButtons() {
-        if (clothesSizesList.size() > 0 || sizeDropdownList.size() > 0) {
-            try {
-                int randomNumber = RandomNumberGenerator.generateNumber(0, clothesSizesList.size() - 1);
-                SeleniumUtils.waitForElementAndClick(5, clothesSizesList.get(randomNumber));
-                String itemId = clothesSizesList.get(randomNumber).getAttribute("data-productid");
-                return itemId;
-            } catch (Exception e) {
-                int randomNumber2 = RandomNumberGenerator.generateNumber(0, shoesSizeList.size() - 1);
-                SeleniumUtils.waitForElementAndClick(5, shoesSizeList.get(randomNumber2));
-                String itemId = shoesSizeList.get(randomNumber2).getAttribute("data-productid");
-                return itemId;
-            }
+        if (sizeList.size() > 0) {
+            int randomNumber = RandomNumberGenerator.generateNumber(0, sizeList.size() - 1);
+            SeleniumUtils.waitForElementAndClick(5, sizeList.get(randomNumber));
+            String itemId = sizeList.get(randomNumber).getAttribute("data-productid");
+            return itemId;
         } else return "This item does not have an id";
     }
 
     public String selectRandomSizeAndGetItemId() {
-        try {
+        if (dropDropdownSelector.getAttribute("class").equalsIgnoreCase(DROPDOWN_CSS)) {
             return selectRandomSizeFromDropdown();
-        } catch (Exception e) {
-            return selectRandomSizeFormButtons();
-        }
+        } else return selectRandomSizeFormButtons();
     }
 
     public ProductPage selectRandomSize() {
         SeleniumUtils.staticWait(3);
 
-        try {
-            try {
-                selectRandomSizeFromDropdown();
-            } catch (Exception ex) {
-                selectRandomSizeFormButtons();
-            }
-        } catch (Exception e) {
+        if (sizeList.size() <= 0) {
             System.out.println("The product don't have sizes");
-        }
+        } else if (dropDropdownSelector.getAttribute("class").equalsIgnoreCase(DROPDOWN_CSS)) {
+            selectRandomSizeFromDropdown();
+        } else selectRandomSizeFormButtons();
 
         return new ProductPage(driver);
     }

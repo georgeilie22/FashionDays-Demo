@@ -45,7 +45,7 @@ public class LoginTest {
         loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
-                .AssertLoginError(LoginErrorsEnum.INVALID_EMAIL);
+                .assertLoginError(LoginErrorsEnum.INVALID_EMAIL);
 
     }
 
@@ -55,7 +55,7 @@ public class LoginTest {
         loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
-                .AssertLoginError(LoginErrorsEnum.VALID_EMAIL);
+                .assertLoginError(LoginErrorsEnum.VALID_EMAIL);
 
     }
 
@@ -65,7 +65,7 @@ public class LoginTest {
         loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
-                .AssertLoginError(LoginErrorsEnum.EMPTY_EMAIL);
+                .assertLoginError(LoginErrorsEnum.EMPTY_EMAIL);
 
     }
 
@@ -75,7 +75,7 @@ public class LoginTest {
         loginPage = campainsPage
                 .getToLoginPage()
                 .invalidLogin(user, pass)
-                .AssertLoginError(LoginErrorsEnum.EMPTY_PASSWORD);
+                .assertLoginError(LoginErrorsEnum.EMPTY_PASSWORD);
     }
 
 

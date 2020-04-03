@@ -37,7 +37,9 @@ public class AddProductToCart {
                 .clickOnRandomProduct()
                 .selectRandomSize()
                 .addToCart();
+
         String productName = productPage.getProductName();
+
         productPage.goToCart()
                 .checkProductInCart(productName);
     }
@@ -48,12 +50,18 @@ public class AddProductToCart {
                 .goToManPage()
                 .clickOnRandomCampain()
                 .clickOnRandomProduct();
+
         String productId = productPage.selectRandomSizeAndGetItemId();
+
         productPage.addToCart()
                 .goToCart()
                 .checkProductId(productId);
     }
 
+    //TODO login adaug produs ,log out adaug alt produs, login si vad daca au aparut ambele produse
+    //TODO simplificare login check
+    //TODO cart operations/ add/ increase /decrease/ delete
+    //TODO checkout operations / add adress/ cleanup/
     @Test(priority = 3)
     public void addProductToCartLoggedIn() {
         new CampainsPage(driver)
@@ -68,7 +76,9 @@ public class AddProductToCart {
                 .clickOnRandomProduct()
                 .selectRandomSize()
                 .addToCart();
+
         String productName = productPage.getProductName();
+
         productPage.goToCart()
                 .checkProductInCart(productName);
     }
