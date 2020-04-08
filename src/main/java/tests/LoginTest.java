@@ -34,7 +34,7 @@ public class LoginTest {
         campainsPage = new CampainsPage(driver)
                 .getToLoginPage()
                 .validLogin();
-        new MyAccountPage(driver).assertAccountPage();
+        campainsPage.assertUserLoggedIn();
 
     }
 

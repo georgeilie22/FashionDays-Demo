@@ -13,16 +13,6 @@ public class ProductPage extends Header {
         super(driver);
     }
 
-
-//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link']")
-//    private List<WebElement> clothesSizesList;
-//
-//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link  ']")
-//    private List<WebElement> shoesSizeList;
-//
-//    @FindBy(css = "label[class='sizeSelector btn btn-block btn-default po-link  ']  ")
-//    private List<WebElement> sizeDropdownList;
-
     private static String DROPDOWN_CSS = "multiple-buttons radio-buttons dropdown";
 
     @FindBy(css = "div[class*='radio-buttons'] > div > div > label:not([class*='disabled'])")

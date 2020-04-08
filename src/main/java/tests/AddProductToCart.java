@@ -7,6 +7,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageobject.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static core.BuildBrowser.WEBSITE;
 
 public class AddProductToCart {
@@ -15,6 +18,7 @@ public class AddProductToCart {
     WebDriver driver;
     ProductPage productPage;
     HomePage homePage;
+    CampainsPage campainsPage;
 
 
     @BeforeMethod
@@ -58,18 +62,14 @@ public class AddProductToCart {
                 .checkProductId(productId);
     }
 
-    //TODO login adaug produs ,log out adaug alt produs, login si vad daca au aparut ambele produse
-    //TODO simplificare login check
     //TODO cart operations/ add/ increase /decrease/ delete
     //TODO checkout operations / add adress/ cleanup/
     @Test(priority = 3)
     public void addProductToCartLoggedIn() {
-        new CampainsPage(driver)
+        new Header(driver)
                 .getToLoginPage()
-                .validLogin();
-        new MyAccountPage(driver)
-                .assertAccountPage()
-                .goToCampainsPage();
+                .validLogin()
+                .assertUserLoggedIn();
         productPage = homePage
                 .goToManPage()
                 .clickOnRandomCampain()
@@ -81,6 +81,40 @@ public class AddProductToCart {
 
         productPage.goToCart()
                 .checkProductInCart(productName);
+    }
+
+    @Test(priority = 4)
+    public void addTwoProductsToCartLoggedInAndNotLoggedIn() {
+        new Header(driver)
+                .getToLoginPage()
+                .validLogin()
+                .assertUserLoggedIn();
+        productPage = homePage
+                .goToManPage()
+                .clickOnRandomCampain()
+                .clickOnRandomProduct()
+                .selectRandomSize()
+                .addToCart();
+
+        ArrayList<String> productNamesArray = new ArrayList<>();
+        productNamesArray.add(productPage.getProductName());
+
+        productPage.logOut();
+
+        new CampainsPage(driver)
+                .goToCampainsPage()
+                .clickOnRandomCampain()
+                .clickOnRandomProduct()
+                .selectRandomSize()
+                .addToCart();
+        productNamesArray.add(productPage.getProductName());
+
+        productPage
+                .getToLoginPage()
+                .validLogin();
+        new CartPage(driver)
+                .checkProductsInCart(productNamesArray);
+
     }
 
     @AfterMethod

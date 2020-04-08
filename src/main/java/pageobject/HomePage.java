@@ -19,4 +19,5 @@ public class HomePage extends Header {
         SeleniumUtils.waitForElementAndClick(5,selectManButton);
         return new CampainsPage(driver);
     }
+
 }

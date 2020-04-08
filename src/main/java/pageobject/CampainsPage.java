@@ -17,12 +17,6 @@ public class CampainsPage extends Header {
     private List<WebElement> campains = driver.findElements(By.cssSelector("li[id*='campaign-']"));
 
 
-    public LoginPage getToLoginPage() {
-        SeleniumUtils.staticWait(2);
-        SeleniumUtils.waitForElementAndClick(5, accountButton);
-        return new LoginPage(driver);
-    }
-
     public ProductsListPage clickOnRandomCampain() {
         SeleniumUtils.staticWait(1);
         int randomNumber = RandomNumberGenerator.generateNumber(0, campains.size() - 1);

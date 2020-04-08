@@ -4,12 +4,14 @@ import core.BuildBrowser;
 import core.Config;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumUtils {
 
     private static WebDriver driver;
+    private static Actions actions;
 
     public static WebDriver buildDriver() {
         BuildBrowser browser = new BuildBrowser(Config.getBrowserType());
@@ -35,4 +37,11 @@ public class SeleniumUtils {
             e.printStackTrace();
         }
     }
+
+    public static void moveToObject(WebDriver driver, WebElement element){
+        actions= new Actions(driver);
+        actions.moveToElement(element).build().perform();
+    }
+
+
 }
