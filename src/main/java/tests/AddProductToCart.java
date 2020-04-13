@@ -1,6 +1,7 @@
 package tests;
 
 import core.utils.SeleniumUtils;
+import core.utils.URLUtil;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +9,6 @@ import org.testng.annotations.Test;
 import pageobject.*;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static core.BuildBrowser.WEBSITE;
 
 public class AddProductToCart {
 
@@ -24,7 +22,7 @@ public class AddProductToCart {
     @BeforeMethod
     public void beforeTest() {
         driver = SeleniumUtils.buildDriver();
-        driver.get(WEBSITE);
+        driver.get(URLUtil.getURL());
         homePage = new HomePage(driver);
         homePage.allowNotifications();
         homePage.goToCart()

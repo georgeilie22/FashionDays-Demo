@@ -1,5 +1,6 @@
 package pageobject;
 
+import core.utils.RandomNumberGenerator;
 import core.utils.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,9 @@ public class CartPage extends Header {
 
     @FindBy(css = "a[class='remove-from-cart icon-fd-trash']")
     private List<WebElement> trashIconsList;
+
+    @FindBy(css = "a[class='remove-from-cart icon-fd-trash']")
+    private WebElement trashIcon;
 
     @FindBy(css = "div[data-prodid")
     private List<WebElement> cartProductIdList;
@@ -88,7 +92,67 @@ public class CartPage extends Header {
         return new CartPage(driver);
     }
 
+    public CartPage deleteRandomProductFromCart() {
+        int randomNumber = RandomNumberGenerator.generateNumber(1, trashIconsList.size()-1);
+        SeleniumUtils.waitForElementAndClick(5, trashIconsList.get(randomNumber));
+
+        return new CartPage(driver);
+    }
+
+    public int saveNumberOfProductsPresent() {
+        SeleniumUtils.waitForElementToBeVisible(5,trashIcon);
+        return trashIconsList.size();
+    }
+
+    public CartPage checkTheNewNumberProducts(int previousNumber) {
+        SeleniumUtils.staticWait(1);
+        Assert.assertTrue(previousNumber > trashIconsList.size());
+
+        return new CartPage(driver);
+    }
+
     public void closeTheCart() {
         SeleniumUtils.waitForElementAndClick(5, closeCartButton);
     }
+
+
+    public CartPage selectRandomQuantity() {
+        SeleniumUtils.waitForElementAndClick(5, quantityDropdown);
+        int randomNumber = RandomNumberGenerator.generateNumber(0, quantityList.size() - 1);
+        SeleniumUtils.waitForElementAndClick(5, quantityList.get(randomNumber));
+
+        return new CartPage(driver);
+    }
+
+    public CartPage selectMinimumQuantity() {
+        SeleniumUtils.waitForElementAndClick(5, quantityDropdown);
+        SeleniumUtils.waitForElementAndClick(5, quantityList.get(0));
+
+        return new CartPage(driver);
+    }
+
+    public CartPage selectMaxQuantity() {
+        SeleniumUtils.waitForElementAndClick(5, quantityDropdown);
+        SeleniumUtils.waitForElementAndClick(5, quantityList.get((quantityList.size() - 1)));
+
+        return new CartPage(driver);
+    }
+
+    public String savePriceValue() {
+        SeleniumUtils.staticWait(1);
+        SeleniumUtils.waitForElementToBeVisible(5, price);
+
+        return price.getText();
+    }
+
+    public CartPage checkPriceUpdate(String firstPrice, String updatedPrice) {
+        if (quantityList.size() == 1) {
+            System.out.println("Only one product is available.");
+        } else {
+            Assert.assertNotEquals(updatedPrice, firstPrice);
+        }
+        return new CartPage(driver);
+    }
+
+    public CartPage assertProducts;
 }
