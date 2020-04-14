@@ -22,7 +22,7 @@ public class CartOperations {
         new Header(driver).allowNotifications();
     }
 
-    @Test()
+    @Test
     public void increaseProductQuantity() {
         productPage = new HomePage(driver)
                 .goToManPage()

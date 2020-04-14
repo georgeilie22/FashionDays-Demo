@@ -59,8 +59,7 @@ public class AddProductToCart {
                 .goToCart()
                 .checkProductId(productId);
     }
-
-    //TODO cart operations/ add/ increase /decrease/ delete
+    
     //TODO checkout operations / add adress/ cleanup/
     @Test(priority = 3)
     public void addProductToCartLoggedIn() {
