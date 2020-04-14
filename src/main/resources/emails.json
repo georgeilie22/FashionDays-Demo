@@ -1,0 +1,26 @@
+{
+  "invalid_email_values": [
+    "thisrandomtextisfortest",
+    "@gmail.com",
+    "Joe Smith <vplaceholder@domain.com>",
+    "vplaceholder.gmail.com",
+    ".vplaceholder@gmail.com",
+    "vplaceholder.@gmail.com",
+    "vplaceholder..vplaceholder@gmail.com",
+    "vplaceholder@domain.com (Joe Smith)",
+    "vplaceholder@111.222.333.44444",
+    "vplaceholder@gmail..com",
+    "vplaceholder@"
+  ],
+  "empty_email_values" : [
+    "",
+    " "
+  ],
+  "valid_email_values": [
+    "vplaceholder@-gmail.com",
+    "あいうえお@domain.com",
+    "vplaceholder@gmail.com"
+  ]
+
+
+}
