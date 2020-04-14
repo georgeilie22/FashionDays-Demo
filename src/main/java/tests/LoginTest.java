@@ -3,6 +3,7 @@ package tests;
 import core.dataproviders.LoginDataProvider;
 import core.enums.LoginErrorsEnum;
 import core.utils.SeleniumUtils;
+import core.utils.URLUtil;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,9 +11,6 @@ import org.testng.annotations.Test;
 import pageobject.CampainsPage;
 import pageobject.Header;
 import pageobject.LoginPage;
-import pageobject.MyAccountPage;
-
-import static core.BuildBrowser.WEBSITE;
 
 public class LoginTest {
 
@@ -25,7 +23,7 @@ public class LoginTest {
     @BeforeMethod
     public void beforeTest() {
         driver = SeleniumUtils.buildDriver();
-        driver.get(WEBSITE);
+        driver.get(URLUtil.getURL());
         new Header(driver).allowNotifications();
     }
 
