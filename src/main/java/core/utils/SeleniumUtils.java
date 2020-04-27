@@ -2,11 +2,14 @@ package core.utils;
 
 import core.BuildBrowser;
 import core.Config;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.awt.event.KeyEvent;
 
 public class SeleniumUtils {
 
@@ -43,5 +46,9 @@ public class SeleniumUtils {
         actions.moveToElement(element).build().perform();
     }
 
+    public static void clickWriteAndEnter(WebDriver driver, WebElement element,String text){
+        actions= new Actions(driver);
+        actions.moveToElement(element).click().sendKeys(text).sendKeys(Keys.ENTER).build().perform();
+    }
 
 }

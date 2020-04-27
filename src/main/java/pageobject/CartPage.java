@@ -48,6 +48,9 @@ public class CartPage extends Header {
     @FindBy(css = ".cart-item-subtotal-price > span")
     private WebElement price;
 
+    @FindBy(css = "#cartProceedCheckout")
+    private WebElement nextStepButton;
+
 
     public CartPage checkProductInCart(String product) {
         SeleniumUtils.staticWait(1);
@@ -93,14 +96,14 @@ public class CartPage extends Header {
     }
 
     public CartPage deleteRandomProductFromCart() {
-        int randomNumber = RandomNumberGenerator.generateNumber(1, trashIconsList.size()-1);
+        int randomNumber = RandomNumberGenerator.generateNumber(1, trashIconsList.size() - 1);
         SeleniumUtils.waitForElementAndClick(5, trashIconsList.get(randomNumber));
 
         return new CartPage(driver);
     }
 
     public int saveNumberOfProductsPresent() {
-        SeleniumUtils.waitForElementToBeVisible(5,trashIcon);
+        SeleniumUtils.waitForElementToBeVisible(5, trashIcon);
         return trashIconsList.size();
     }
 
@@ -154,5 +157,34 @@ public class CartPage extends Header {
         return new CartPage(driver);
     }
 
-    public CartPage assertProducts;
+    public CheckoutPage getToTheCheckoutPage() {
+        ProductPage productPage;
+        HomePage homePage = new HomePage(driver);
+
+        homePage.getToLoginPage()
+                .validLogin()
+                .assertUserLoggedIn();
+        productPage = homePage
+                .goToManPage()
+                .clickOnRandomCampain()
+                .clickOnRandomProduct()
+                .selectRandomSize()
+                .addToCart();
+
+        String productName = productPage.getProductName();
+
+        productPage.goToCart()
+                .checkProductInCart(productName);
+        SeleniumUtils.waitForElementAndClick(5, nextStepButton);
+
+        return new CheckoutPage(driver);
+    }
+
+    public CartPage assertEmptyCart(){
+        SeleniumUtils.staticWait(1);
+        Assert.assertEquals(trashIconsList.size(),0);
+
+        return new CartPage(driver);
+    }
+
 }
