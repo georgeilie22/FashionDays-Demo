@@ -64,7 +64,7 @@ public class AddProductToCart {
     @Test(priority = 3)
     public void addProductToCartLoggedIn() {
         new Header(driver)
-                .getToLoginPage()
+                .goToLoginPage()
                 .validLogin()
                 .assertUserLoggedIn();
         productPage = homePage
@@ -83,7 +83,7 @@ public class AddProductToCart {
     @Test(priority = 4)
     public void addTwoProductsToCartLoggedInAndNotLoggedIn() {
         new Header(driver)
-                .getToLoginPage()
+                .goToLoginPage()
                 .validLogin()
                 .assertUserLoggedIn();
         productPage = homePage
@@ -107,7 +107,7 @@ public class AddProductToCart {
         productNamesArray.add(productPage.getProductName());
 
         productPage
-                .getToLoginPage()
+                .goToLoginPage()
                 .validLogin();
         new CartPage(driver)
                 .checkProductsInCart(productNamesArray);

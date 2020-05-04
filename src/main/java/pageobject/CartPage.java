@@ -157,11 +157,11 @@ public class CartPage extends Header {
         return new CartPage(driver);
     }
 
-    public CheckoutPage getToTheCheckoutPage() {
+    public CheckoutPage addProductToCartAndgetToTheCheckoutPage() {
         ProductPage productPage;
         HomePage homePage = new HomePage(driver);
 
-        homePage.getToLoginPage()
+        homePage.goToLoginPage()
                 .validLogin()
                 .assertUserLoggedIn();
         productPage = homePage
@@ -175,6 +175,12 @@ public class CartPage extends Header {
 
         productPage.goToCart()
                 .checkProductInCart(productName);
+        SeleniumUtils.waitForElementAndClick(5, nextStepButton);
+
+        return new CheckoutPage(driver);
+    }
+
+    public CheckoutPage goToCheckoutPage(){
         SeleniumUtils.waitForElementAndClick(5, nextStepButton);
 
         return new CheckoutPage(driver);

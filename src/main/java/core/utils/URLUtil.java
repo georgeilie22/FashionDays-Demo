@@ -10,3 +10,5 @@ public class URLUtil {
         return properties.getProperty("base_url");
     }
 }
+
+

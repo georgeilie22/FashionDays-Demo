@@ -68,7 +68,7 @@ public class Header extends BaseObject {
         SeleniumUtils.waitForElementAndClick(5,logoutButton);
     }
 
-    public LoginPage getToLoginPage() {
+    public LoginPage goToLoginPage() {
         SeleniumUtils.staticWait(2);
         SeleniumUtils.waitForElementAndClick(5, accountButton);
         return new LoginPage(driver);

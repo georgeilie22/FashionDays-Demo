@@ -46,6 +46,14 @@ public class SeleniumUtils {
         actions.moveToElement(element).build().perform();
     }
 
+    public static void moveToObjectAndClick(WebDriver driver, WebElement element){
+        actions= new Actions(driver);
+        actions.moveToElement(element)
+                .click()
+                .build()
+                .perform();
+    }
+
     public static void clickWriteAndEnter(WebDriver driver, WebElement element,String text){
         actions= new Actions(driver);
         actions.moveToElement(element).click().sendKeys(text).sendKeys(Keys.ENTER).build().perform();

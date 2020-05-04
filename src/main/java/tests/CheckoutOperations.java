@@ -6,9 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject.CartPage;
-import pageobject.CheckoutPage;
-import pageobject.Header;
+import pageobject.*;
 
 public class CheckoutOperations {
 
@@ -22,21 +20,66 @@ public class CheckoutOperations {
         new Header(driver).allowNotifications();
     }
 
-    @Test
+    @Test(priority = 1)
     public void getToCheckout() {
         checkoutPage = new CartPage(driver)
-                .getToTheCheckoutPage()
+                .addProductToCartAndgetToTheCheckoutPage()
                 .assertCheckoutPage();
     }
 
-    @Test
-    public void selectDeliveryOption() {
+    @Test(priority = 2)
+    public void selectEasyBoxDelivery() {
         checkoutPage = new CartPage(driver)
-                .getToTheCheckoutPage()
+                .addProductToCartAndgetToTheCheckoutPage()
                 .assertCheckoutPage()
-                .selectRandomDeliveryOptions()
-                .fillDeliveryInfo();
+                .selectEasyBoxDeliveryOption()
+                .fillEasyboxDeliveryInfo();
+        String easyBoxName = checkoutPage.selectRandomPickupPointAndSaveTheName();
+        checkoutPage.assertEasyBoxDeliveryInformation(easyBoxName);
     }
+
+    @Test(priority = 3)
+    public void selectStandardDelivery() {
+        checkoutPage = new CartPage(driver)
+                .addProductToCartAndgetToTheCheckoutPage()
+                .assertCheckoutPage()
+                .selectStandardDeliveryOptions()
+                .fillNormalDeliveryInfo()
+                .assertStandardDeliveryInformation();
+    }
+
+    @Test(priority = 4)
+    public void checkIfProductIsCorrect() {
+        new Header(driver)
+                .goToLoginPage()
+                .validLogin();
+
+        ProductPage productPage = new HomePage(driver)
+                .goToManPage()
+                .clickOnRandomCampain()
+                .clickOnRandomProduct()
+                .selectRandomSize()
+                .addToCart();
+
+        String selectedProduct = productPage.getProductName();
+
+        productPage
+                .goToCart()
+                .checkProductInCart(selectedProduct)
+                .goToCheckoutPage()
+                .checkIfProductIsMatching(selectedProduct);
+
+    }
+
+    @Test(priority = 5)
+    public void deletProductsFromCheckout() {
+        checkoutPage = new CartPage(driver)
+                .addProductToCartAndgetToTheCheckoutPage()
+                .assertCheckoutPage();
+        checkoutPage
+                .deleteProduct();
+    }
+
 
     @AfterMethod
     public void teardown() {
