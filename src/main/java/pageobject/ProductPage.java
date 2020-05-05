@@ -2,6 +2,7 @@ package pageobject;
 
 import core.utils.RandomNumberGenerator;
 import core.utils.SeleniumUtils;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -60,9 +61,15 @@ public class ProductPage extends Header {
     }
 
     public String selectRandomSizeAndGetItemId() {
-        if (dropDropdownSelector.getAttribute("class").equalsIgnoreCase(DROPDOWN_CSS)) {
-            return selectRandomSizeFromDropdown();
-        } else return selectRandomSizeFormButtons();
+        try {
+            if (dropDropdownSelector.getAttribute("class").equalsIgnoreCase(DROPDOWN_CSS)) {
+                return selectRandomSizeFromDropdown();
+            } else return selectRandomSizeFormButtons();
+        }
+        catch (NoSuchElementException e){
+            e.printStackTrace();
+            return "This item does not have an id";
+        }
     }
 
     public ProductPage selectRandomSize() {

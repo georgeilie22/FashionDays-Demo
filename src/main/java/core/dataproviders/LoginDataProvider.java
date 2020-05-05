@@ -16,8 +16,8 @@ public class LoginDataProvider {
 
         Object[][] obiect = new Object[emailArray.size()][2];
         for (int nr = 0; nr < emailArray.size(); nr++) {
-            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
-            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+            obiect[nr][0] = emailArray.get(nr).getAsString();
+            obiect[nr][1] = passwrodsArray.get(nr).getAsString();
         }
 
         return obiect;
@@ -32,8 +32,8 @@ public class LoginDataProvider {
 
         Object[][] obiect = new Object[emailArray.size()][2];
         for (int nr = 0; nr < emailArray.size(); nr++) {
-            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
-            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+            obiect[nr][0] = emailArray.get(nr).getAsString();
+            obiect[nr][1] = passwrodsArray.get(nr).getAsString();
         }
 
         return obiect;
@@ -48,8 +48,8 @@ public class LoginDataProvider {
 
         Object[][] obiect = new Object[emailArray.size()][2];
         for (int nr = 0; nr < emailArray.size(); nr++) {
-            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
-            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+            obiect[nr][0] = emailArray.get(nr).getAsString();
+            obiect[nr][1] = passwrodsArray.get(nr).getAsString();
         }
 
         return obiect;
@@ -64,8 +64,8 @@ public class LoginDataProvider {
 
         Object[][] obiect = new Object[passwrodsArray.size()][2];
         for (int nr = 0; nr < passwrodsArray.size(); nr++) {
-            obiect[nr][0] = emailArray.get(nr).toString().replace("\"", "");
-            obiect[nr][1] = passwrodsArray.get(nr).toString().replace("\"", "");
+            obiect[nr][0] = emailArray.get(nr).getAsString();
+            obiect[nr][1] = passwrodsArray.get(nr).getAsString();
         }
 
         return obiect;

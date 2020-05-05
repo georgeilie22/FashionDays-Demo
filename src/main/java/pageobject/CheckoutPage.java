@@ -1,9 +1,7 @@
 package pageobject;
 
 import com.google.gson.JsonObject;
-import core.utils.JsonUtil;
-import core.utils.RandomNumberGenerator;
-import core.utils.SeleniumUtils;
+import core.utils.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,11 +16,11 @@ public class CheckoutPage extends Header {
     }
 
     private final JsonObject DELIVERY_DATA = JsonUtil.getJson("src\\main\\resources\\deliveryDetails.json");
-    private final String FIRST_NAME = JsonUtil.getJsonStringElement(DELIVERY_DATA, "firstName");
-    private final String LAST_NAME = JsonUtil.getJsonStringElement(DELIVERY_DATA, "lastName");
-    private final String PHONE_NUMBER = JsonUtil.getJsonStringElement(DELIVERY_DATA, "phoneNumber");
-    private final String CITY = JsonUtil.getJsonStringElement(DELIVERY_DATA, "city");
-    private final String ADRESS = JsonUtil.getJsonStringElement(DELIVERY_DATA, "adress");
+    private final String FIRST_NAME = FormatUtil.convertJsonValueToString(DELIVERY_DATA, "firstName");
+    private final String LAST_NAME = FormatUtil.convertJsonValueToString(DELIVERY_DATA, "lastName");
+    private final String PHONE_NUMBER = FormatUtil.convertJsonValueToString(DELIVERY_DATA, "phoneNumber");
+    private final String CITY = FormatUtil.convertJsonValueToString(DELIVERY_DATA, "city");
+    private final String ADRESS = FormatUtil.convertJsonValueToString(DELIVERY_DATA, "adress");
 
 
     @FindBy(css = "section[class='bottom-shadow'] > header > :nth-child(2)")
@@ -121,7 +119,7 @@ public class CheckoutPage extends Header {
     @FindBy(css = "a[class='remove-from-cart icon-fd-trash']")
     private List<WebElement> trashIconsList;
 
-    @FindBy(css = "div[class='remove-product']")
+    @FindBy(css = "a.remove-from-cart.icon-fd-trash")
     private WebElement trashIcon;
 
     public CheckoutPage assertCheckoutPage() {
@@ -244,7 +242,9 @@ public class CheckoutPage extends Header {
     }
 
     public CampainsPage deleteProduct(){
-        SeleniumUtils.waitForElementAndClick(5,trashIcon);
+        SeleniumUtils.waitForElementToBeVisible(5,trashIcon);
+        JavascriptUtil javascriptUtil= new JavascriptUtil(driver);
+        javascriptUtil.click(trashIcon);
 
         return new CampainsPage(driver);
     }

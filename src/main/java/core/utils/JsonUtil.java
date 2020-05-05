@@ -29,8 +29,4 @@ public class JsonUtil {
         return jsonObject;
     }
 
-    public static String getJsonStringElement(JsonObject jsonObject, String credential){
-
-        return jsonObject.get(credential).toString().replace("\"", "");
-    }
 }
