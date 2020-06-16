@@ -20,7 +20,7 @@ public class PropertiesUtil {
      * @return the properties object
      */
 
-    private static Logger logger = LogManager.getLogger(PropertiesUtil.class);
+    private static final Logger logger = LogManager.getLogger(PropertiesUtil.class);
 
     public static Properties getProperty(String path) {
         Properties properties = new Properties();

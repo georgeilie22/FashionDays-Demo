@@ -30,7 +30,7 @@ public class LoginTest {
     @Test
     public void validLoginTest() {
         campainsPage = new CampainsPage(driver)
-                .getToLoginPage()
+                .goToLoginPage()
                 .validLogin();
         campainsPage.assertUserLoggedIn();
 
@@ -41,7 +41,7 @@ public class LoginTest {
     public void invalidEmailsLoginTest(String user, String pass) {
         campainsPage = new CampainsPage(driver);
         loginPage = campainsPage
-                .getToLoginPage()
+                .goToLoginPage()
                 .invalidLogin(user, pass)
                 .assertLoginError(LoginErrorsEnum.INVALID_EMAIL);
 
@@ -51,7 +51,7 @@ public class LoginTest {
     public void validEmailsLoginTest(String user, String pass) {
         campainsPage = new CampainsPage(driver);
         loginPage = campainsPage
-                .getToLoginPage()
+                .goToLoginPage()
                 .invalidLogin(user, pass)
                 .assertLoginError(LoginErrorsEnum.VALID_EMAIL);
 
@@ -61,7 +61,7 @@ public class LoginTest {
     public void emptyEmailsLoginTest(String user, String pass) {
         campainsPage = new CampainsPage(driver);
         loginPage = campainsPage
-                .getToLoginPage()
+                .goToLoginPage()
                 .invalidLogin(user, pass)
                 .assertLoginError(LoginErrorsEnum.EMPTY_EMAIL);
 
@@ -71,7 +71,7 @@ public class LoginTest {
     public void emptyPasswordLogInTest(String user, String pass) {
         campainsPage = new CampainsPage(driver);
         loginPage = campainsPage
-                .getToLoginPage()
+                .goToLoginPage()
                 .invalidLogin(user, pass)
                 .assertLoginError(LoginErrorsEnum.EMPTY_PASSWORD);
     }
